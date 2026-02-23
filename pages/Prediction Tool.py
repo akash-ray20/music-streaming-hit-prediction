@@ -30,7 +30,11 @@ with col1:
     released_year = st.selectbox("Release Year", options=range(2015, 2025), index=7)
     released_month = st.slider("Release Month", 1, 12, 6)
     released_day = st.slider("Release Day", 1, 31, 15)
-    key_encoded = st.slider("Musical Key (Encoded)", 0, 11, 0)
+    key_options = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    selected_key = st.selectbox("Musical Key", key_options, index=key_options.index('C'))
+    key_mapping = {
+    'C': 0, 'C#': 1, 'D': 2, 'D#': 3,'E': 4, 'F': 5, 'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11}
+    key_encoded = key_mapping[selected_key]
 
 with col2:
     in_spotify_playlists = st.slider("In Spotify Playlists", 0, 500, 30)
