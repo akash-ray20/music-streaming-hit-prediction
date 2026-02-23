@@ -4,37 +4,52 @@ def render_nav(active_page: str):
 
     # ---------- STYLING ----------
     st.markdown("""
-    <style>
-    .nav-container {
-        display: flex;
-        justify-content: center;
-        gap: 14px;
-        margin-bottom: 35px;
-    }
+<style>
 
-    div.stButton > button {
-        border-radius: 30px;
-        padding: 10px 24px;
-        background: linear-gradient(145deg, #1a1f2b, #111827);
-        color: white;
-        font-weight: 500;
-        border: none;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        transition: all 0.25s ease;
-    }
+/* --- Hide Sidebar Completely --- */
+section[data-testid="stSidebar"] {
+    display: none;
+}
 
-    div.stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
-    }
+/* Remove extra left padding caused by sidebar */
+section.main > div {
+    padding-left: 2rem;
+}
 
-    .active-tab div.stButton > button {
-        background: linear-gradient(90deg, #ff00cc, #3333ff);
-        box-shadow: 0 6px 30px rgba(255, 0, 200, 0.6);
-    }
+/* --- Navigation Container --- */
+.nav-container {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 35px;
+}
 
-    </style>
-    """, unsafe_allow_html=True)
+/* --- Button Styling --- */
+div.stButton > button {
+    border-radius: 30px;
+    padding: 10px 24px;
+    background: linear-gradient(145deg, #1a1f2b, #111827);
+    color: white;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+div.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
+}
+
+/* Active tab */
+.active-tab div.stButton > button {
+    background: linear-gradient(90deg, #ff00cc, #3333ff);
+    box-shadow: 0 6px 30px rgba(255, 0, 200, 0.6);
+}
+
+</style>
+""", unsafe_allow_html=True)
 
     # ---------- NAVIGATION ----------
     pages = {
