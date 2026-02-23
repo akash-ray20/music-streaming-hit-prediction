@@ -102,7 +102,7 @@ with col1:
     show_image("Random Forest Feature Importance.png", "🔍 Random Forest Feature Importance")
 
 with col2:
-    show_image("XGRegressor Feature Importance.png", "📌 XGBoost Feature Importance")
+    show_image("XGBRegressor Feature Importance.png", "📌 XGBoost Feature Importance")
 
 st.markdown("""
 ### 🧠 Final Observations
