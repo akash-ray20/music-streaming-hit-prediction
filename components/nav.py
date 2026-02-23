@@ -77,6 +77,27 @@ def inject_nav_styles():
         box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
     }
 
+    /* ======================================================
+       5. ACTIVE TAB STATE
+    ====================================================== */
+
+    .nav-active button {
+        background: linear-gradient(90deg, #ff00cc, #3333ff) !important;
+        color: white !important;
+        border: none !important;
+        box-shadow: 0 0 15px rgba(255, 0, 200, 0.6);
+    }
+
+    .nav-active button::after {
+        content: "";
+        display: block;
+        margin: 6px auto 0 auto;
+        width: 60%;
+        height: 3px;
+        background: linear-gradient(90deg, #ff00cc, #3333ff);
+        border-radius: 5px;
+    }
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -85,24 +106,16 @@ def inject_nav_styles():
 # NAV RENDER FUNCTION
 # ==========================================================
 
-def render_nav(active_page: str):
-    """
-    Renders the top navigation bar.
-    active_page: Name of current page (must match key in PAGES dict)
-    """
+for i, (name, path) in enumerate(PAGES.items()):
+    with cols[i]:
 
-    inject_nav_styles()
+        is_active = name == active_page
 
-    cols = st.columns(len(PAGES))
+        if is_active:
+            st.markdown('<div class="nav-active">', unsafe_allow_html=True)
 
-    for i, (name, path) in enumerate(PAGES.items()):
-        with cols[i]:
+        if st.button(name, key=f"nav_{name}"):
+            st.switch_page(path)
 
-            is_active = name == active_page
-
-            # Change label + styling if active
-            button_label = f"● {name}" if is_active else name
-
-            if st.button(button_label, key=f"nav_{name}"):
-
-                st.switch_page(path)
+        if is_active:
+            st.markdown('</div>', unsafe_allow_html=True)
