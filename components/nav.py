@@ -4,54 +4,81 @@ def render_nav(active_page: str):
 
     # ---------- STYLING ----------
     st.markdown("""
-<style>
+    <style>
 
-/* --- Hide Sidebar Completely --- */
-section[data-testid="stSidebar"] {
-    display: none;
-}
+    /* --- Hide Sidebar Completely --- */
+    section[data-testid="stSidebar"] {
+        display: none;
+    }
 
-/* Remove extra left padding caused by sidebar */
-section.main > div {
-    padding-left: 2rem;
-}
+    section.main > div {
+        padding-left: 2rem;
+    }
 
-/* --- Navigation Container --- */
-.nav-container {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-bottom: 35px;
-}
+    /* --- Ribbon Wrapper --- */
+    .ribbon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 45px;
+    }
 
-/* --- Button Styling --- */
-div.stButton > button {
-    border-radius: 30px;
-    padding: 10px 24px;
-    background: linear-gradient(145deg, #1a1f2b, #111827);
-    color: white;
-    font-weight: 500;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    transition: all 0.25s ease;
-}
+    /* --- Glass Ribbon Container --- */
+    .ribbon {
+        display: flex;
+        gap: 18px;
+        padding: 14px 32px;
+        border-radius: 50px;
+        backdrop-filter: blur(14px);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow:
+            0 8px 32px rgba(0,0,0,0.45),
+            inset 0 0 40px rgba(255, 0, 200, 0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        position: relative;
+    }
 
-/* Hover effect */
-div.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
-}
+    /* --- Subtle Neon Accent Line --- */
+    .ribbon::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: linear-gradient(90deg, #ff00cc, #00f2ff);
+        border-radius: 50px;
+        filter: blur(4px);
+    }
 
-/* Active tab */
-.active-tab div.stButton > button {
-    background: linear-gradient(90deg, #ff00cc, #3333ff);
-    box-shadow: 0 6px 30px rgba(255, 0, 200, 0.6);
-}
+    /* --- Button Base --- */
+    div.stButton > button {
+        border-radius: 30px;
+        padding: 10px 22px;
+        background: transparent;
+        color: white;
+        font-weight: 500;
+        border: none;
+        transition: all 0.25s ease;
+    }
 
-</style>
-""", unsafe_allow_html=True)
+    /* --- Hover Effect --- */
+    div.stButton > button:hover {
+        transform: translateY(-3px);
+        background: rgba(255,255,255,0.08);
+    }
 
-    # ---------- NAVIGATION ----------
+    /* --- Active Tab --- */
+    .active-tab div.stButton > button {
+        background: linear-gradient(90deg, #ff00cc, #3333ff);
+        box-shadow:
+            0 0 15px rgba(255, 0, 200, 0.6),
+            0 0 25px rgba(51, 51, 255, 0.4);
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    # ---------- NAVIGATION PAGES ----------
     pages = {
         "Home": "Home.py",
         "EDA Insights": "pages/EDA_Insights.py",
@@ -60,6 +87,9 @@ div.stButton > button:hover {
         "Project Summary": "pages/Project_Summary.py"
     }
 
+    # ---------- RIBBON LAYOUT ----------
+    st.markdown('<div class="ribbon-wrapper"><div class="ribbon">', unsafe_allow_html=True)
+
     cols = st.columns(len(pages))
 
     for i, (name, path) in enumerate(pages.items()):
@@ -67,7 +97,9 @@ div.stButton > button:hover {
             container_class = "active-tab" if name == active_page else ""
             st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
 
-            if st.button(name):
+            if st.button(name, key=f"nav_{name}"):
                 st.switch_page(path)
 
             st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div></div>', unsafe_allow_html=True)
