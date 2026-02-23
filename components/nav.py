@@ -40,8 +40,8 @@ def render_nav(active_page: str):
     pages = {
         "Home": "Home.py",
         "EDA Insights": "pages/EDA_Insights.py",
-        "Model Training": "pages/Model_Training_Information.py",
-        "Prediction Tool": "pages/Prediction_Tool.py",
+        "Model Training": "pages/Model Training Information.py",
+        "Prediction Tool": "pages/Prediction Tool.py",
         "Project Summary": "pages/Project_Summary.py"
     }
 
