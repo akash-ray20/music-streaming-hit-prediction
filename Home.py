@@ -97,5 +97,4 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("---")
 st.success("Use the navigation bar above to explore insights, model training, predictions, and final takeaways.")
