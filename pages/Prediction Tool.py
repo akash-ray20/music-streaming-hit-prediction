@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import joblib
 
+from components.nav import render_nav
+render_nav("Prediction Tool")
+
 st.set_page_config(page_title="Predict Song Streams", layout="wide")
 #st.title("🧠 Predict Song Popularity")
 
