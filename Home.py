@@ -12,6 +12,24 @@ st.set_page_config(
 from components.nav import render_nav
 render_nav("Home")
 
+st.markdown("""
+<style>
+.card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(255, 0, 200, 0.25);
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Centered Title
 st.markdown(
@@ -37,36 +55,47 @@ except Exception:
     st.warning("Banner image not found.")
 
 # Author section
-st.markdown("---")
-st.markdown("### 👤 Author")
 st.markdown("""
-- **Name:** Akash Ray  
-- **LinkedIn:** [Akash Ray](https://www.linkedin.com/in/akashray1/)  
-- **Project Goal:** Showcase complete data science workflow from analysis to deployment.
-""")
+<div class="card">
+<h3>👤 Author</h3>
+<ul>
+<li><strong>Name:</strong> Akash Ray</li>
+<li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/akashray1/" target="_blank">Akash Ray</a></li>
+<li><strong>Project Goal:</strong> Showcase complete data science workflow from analysis to deployment.</li>
+</ul>
+</div>
+""", unsafe_allow_html=True)
 
 # Problem Statement
-st.markdown("---")
-st.markdown("### 🧩 Problem Statement")
 st.markdown("""
-As a data scientist at a music streaming company, your task is to analyze the key **musical** and **platform-related** features that influence a song’s popularity in 2023.
+<div class="card">
+<h3>🧩 Problem Statement</h3>
+<p>
+As a data scientist at a music streaming company, your task is to analyze the key 
+<strong>musical</strong> and <strong>platform-related</strong> features that influence a song’s popularity in 2023.
+</p>
 
-We aim to:
-- Predict the popularity of a song based on its **audio** and **platform** attributes.
-- Provide **actionable insights** to the **Marketing** and **A&R teams**.
-- Help with playlist curation, cross-platform promotion, and artist scouting decisions.
-""")
+<ul>
+<li>Predict popularity using <strong>audio</strong> and <strong>platform</strong> attributes.</li>
+<li>Provide insights to <strong>Marketing</strong> and <strong>A&amp;R teams</strong>.</li>
+<li>Support playlist curation and artist scouting decisions.</li>
+</ul>
+</div>
+""", unsafe_allow_html=True)
 
 # Workflow
-st.markdown("---")
-st.markdown("### 🔍 Project Workflow")
 st.markdown("""
-1. **Understanding the Dataset**
-2. **EDA (Exploratory Data Analysis)**
-3. **Model Building**
-4. **Evaluation**
-5. **Deployment**
-""")
+<div class="card">
+<h3>🔍 Project Workflow</h3>
+<ol>
+<li><strong>Understanding the Dataset</strong></li>
+<li><strong>EDA (Exploratory Data Analysis)</strong></li>
+<li><strong>Model Building</strong></li>
+<li><strong>Evaluation</strong></li>
+<li><strong>Deployment</strong></li>
+</ol>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 st.success("Use the navigation bar above to explore insights, model training, predictions, and final takeaways.")
