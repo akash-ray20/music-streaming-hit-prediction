@@ -32,20 +32,29 @@ def inject_hover_card_styles():
     st.markdown("""
     <style>
 
+    /* Wrapper centers the card horizontally */
+    .insight-card-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
     .insight-card {
         position: relative;
-        width: 100%;
+        display: inline-block;   /* shrink-wraps to image size */
         border-radius: 16px;
         overflow: hidden;
-        margin-bottom: 32px;
         border: 1px solid rgba(255, 255, 255, 0.06);
         background: rgba(255, 255, 255, 0.02);
         cursor: pointer;
+        max-width: 100%;         /* never overflow viewport */
     }
 
     .insight-card img {
         display: block;
-        width: 100%;
+        width: auto;             /* natural image width */
+        max-width: 100%;         /* cap at container */
         height: auto;
         border-radius: 16px;
         transition: filter 0.4s ease, transform 0.4s ease;
@@ -187,6 +196,7 @@ def display_hover_insight(image_path: str, caption: str, insight_html: str, tags
         tag_html = "<div class='tag-row'>" + pills + "</div>"
 
     parts = [
+        "<div class='insight-card-wrapper'>",
         "<div class='insight-card'>",
         "<img src='data:image/png;base64,", b64, "' alt='", caption, "' />",
         "<div class='hover-hint'>&#8635; hover for insight</div>",
@@ -194,7 +204,7 @@ def display_hover_insight(image_path: str, caption: str, insight_html: str, tags
         "<div class='card-title'>", caption, "</div>",
         insight_html,
         tag_html,
-        "</div></div>",
+        "</div></div></div>",
         "<div class='insight-caption'>&#8593; hover chart to reveal insights</div>",
     ]
     html = "".join(parts)
