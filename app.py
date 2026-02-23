@@ -5,7 +5,8 @@ import altair as alt
 # Page config
 st.set_page_config(
     page_title="🎵 Song Popularity Dashboard",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # Centered Title
