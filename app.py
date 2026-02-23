@@ -17,8 +17,12 @@ st.write("")
 # Optional: Banner image at the top
 try:
     image = Image.open("images/banner.png")
-    resized_image = image.resize((600, 400))
-    st.image(resized_image)
+    resized_image = image.resize((800, 600))
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(resized_image)
+
 except:
     st.warning("Banner image not found.")
 
