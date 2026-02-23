@@ -100,25 +100,9 @@ def render_nav(active_page: str):
 
             is_active = name == active_page
 
-            if st.button(name, key=f"nav_{name}"):
+            # Change label + styling if active
+            button_label = f"● {name}" if is_active else name
+
+            if st.button(button_label, key=f"nav_{name}"):
 
                 st.switch_page(path)
-
-            # Apply active styling AFTER rendering button
-            if is_active:
-                st.markdown(
-                    f"""
-                    <style>
-                    div[data-testid="column"] > div:nth-child({i+1}) div.stButton > button {{
-                        background: rgba(255,255,255,0.12) !important;
-                        box-shadow: 0 0 12px rgba(255,0,200,0.5);
-                        border: 2px solid transparent;
-                        background-clip: padding-box;
-                        position: relative;
-                    }}
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            st.markdown('</div>', unsafe_allow_html=True)
