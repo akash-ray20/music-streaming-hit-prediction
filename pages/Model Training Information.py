@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 from components.nav import render_nav
-render_nav("Model Training Results")
+render_nav("Model Training Information")
 
 st.set_page_config(page_title="Model Training Results", layout="wide")
 st.title("📈 Model Training Results")
