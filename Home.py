@@ -9,6 +9,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+from components.nav import render_nav
+render_nav("Home")
+
+
 # Centered Title
 st.markdown(
     "<h1 style='text-align: center;'>🎵 Song Popularity Prediction Dashboard</h1>",
