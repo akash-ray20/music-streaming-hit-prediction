@@ -221,7 +221,7 @@ image_dir = "images"
 
 # 1. Distribution of Streams
 display_hover_insight(
-    image_path=os.path.join(image_dir, "Distribution of spotify streams.png"),
+    image_path=os.path.join(image_dir, "Distribution (Spotify Streams).png"),
     caption="Distribution of Average Streams",
     insight_html="""
     <p><strong>Skewed Distribution</strong><br>
