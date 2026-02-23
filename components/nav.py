@@ -15,39 +15,27 @@ def render_nav(active_page: str):
         padding-left: 2rem;
     }
 
-    /* Ribbon Wrapper */
-    .ribbon-wrapper {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 45px;
-    }
-
-    /* Ribbon Container */
-    .ribbon {
-        display: flex;
-        gap: 18px;
-        padding: 14px 30px;
-        border-radius: 50px;
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(14px);
-        border: 1px solid rgba(255,255,255,0.08);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    /* Navigation Row */
+    .nav-row {
+        margin-bottom: 40px;
     }
 
     /* Button Base */
     div.stButton > button {
         border-radius: 30px;
         padding: 10px 24px;
-        background: transparent;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(8px);
         color: white;
         font-weight: 500;
-        border: none;
+        border: 1px solid rgba(255,255,255,0.08);
         transition: all 0.25s ease;
     }
 
     div.stButton > button:hover {
         transform: translateY(-3px);
-        background: rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.1);
+        box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
     }
 
     /* Active Tab */
@@ -61,7 +49,6 @@ def render_nav(active_page: str):
     </style>
     """, unsafe_allow_html=True)
 
-    # ---------- PAGES ----------
     pages = {
         "Home": "Home.py",
         "EDA Insights": "pages/EDA_Insights.py",
@@ -70,18 +57,15 @@ def render_nav(active_page: str):
         "Project Summary": "pages/Project_Summary.py"
     }
 
-    # ---------- RENDER RIBBON ----------
-    st.markdown('<div class="ribbon-wrapper"><div class="ribbon">', unsafe_allow_html=True)
+    cols = st.columns(len(pages))
 
-    for name, path in pages.items():
+    for i, (name, path) in enumerate(pages.items()):
+        with cols[i]:
 
-        container_class = "active-tab" if name == active_page else ""
+            container_class = "active-tab" if name == active_page else ""
+            st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
 
-        st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
+            if st.button(name, key=f"nav_{name}"):
+                st.switch_page(path)
 
-        if st.button(name, key=f"nav_{name}"):
-            st.switch_page(path)
-
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    st.markdown('</div></div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
