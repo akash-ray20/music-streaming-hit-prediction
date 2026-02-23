@@ -82,13 +82,23 @@ def inject_nav_styles():
        5. ACTIVE TAB STATE
     ====================================================== */
 
-    .active-tab div.stButton > button {
-        background: linear-gradient(90deg, #ff00cc, #3333ff);
-        box-shadow:
-            0 0 15px rgba(255, 0, 200, 0.6),
-            0 0 25px rgba(51, 51, 255, 0.4);
+   .active-tab div.stButton > button {
+    background: rgba(255,255,255,0.08);
+    box-shadow: none;
+    position: relative;
     }
 
+/* Sharp underline indicator */
+.active-tab div.stButton > button::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #ff00cc, #3333ff);
+}
     </style>
     """, unsafe_allow_html=True)
 
