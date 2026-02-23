@@ -27,6 +27,13 @@ def inject_nav_styles():
     st.markdown("""
     <style>
 
+    html, body, .stApp {
+    background: url("images/background.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    }
+    
     /* ======================================================
        1. LAYOUT CONTROL
     ====================================================== */
