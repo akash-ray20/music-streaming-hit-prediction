@@ -77,19 +77,6 @@ def inject_nav_styles():
         box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
     }
 
-
-
-    /* ======================================================
-       5. ACTIVE TAB STATE
-    ====================================================== */
-
-    .active-tab div.stButton > button {
-        background: rgba(255,255,255,0.08);
-        border-bottom: 3px solid transparent;
-        border-image: linear-gradient(90deg, #ff00cc, #3333ff) 1;
-    }
-
-
     </style>
     """, unsafe_allow_html=True)
 
@@ -104,21 +91,34 @@ def render_nav(active_page: str):
     active_page: Name of current page (must match key in PAGES dict)
     """
 
-    # Inject styles first
     inject_nav_styles()
 
-    # Create horizontal layout
     cols = st.columns(len(PAGES))
 
     for i, (name, path) in enumerate(PAGES.items()):
         with cols[i]:
 
-            # Determine if this is active page
-            container_class = "active-tab" if name == active_page else ""
-            st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
+            is_active = name == active_page
 
-            # Render navigation button
             if st.button(name, key=f"nav_{name}"):
+
                 st.switch_page(path)
+
+            # Apply active styling AFTER rendering button
+            if is_active:
+                st.markdown(
+                    f"""
+                    <style>
+                    div[data-testid="column"] > div:nth-child({i+1}) div.stButton > button {{
+                        background: rgba(255,255,255,0.12) !important;
+                        box-shadow: 0 0 12px rgba(255,0,200,0.5);
+                        border: 2px solid transparent;
+                        background-clip: padding-box;
+                        position: relative;
+                    }}
+                    </style>
+                    """,
+                    unsafe_allow_html=True
+                )
 
             st.markdown('</div>', unsafe_allow_html=True)
