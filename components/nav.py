@@ -105,20 +105,18 @@ def render_nav(active_page: str):
 
     inject_nav_styles()
 
-    # Inject dynamic active button style
-    st.markdown(f"""
-        <style>
-        button[data-testid="baseButton-nav_{active_page}"] {{
-            text-decoration: underline;
-            text-underline-offset: 6px;
-            text-decoration-thickness: 2px;
-        }}
-        </style>
-    """, unsafe_allow_html=True)
-
     cols = st.columns(len(PAGES))
 
     for i, (name, path) in enumerate(PAGES.items()):
         with cols[i]:
-            if st.button(name, key=f"nav_{name}"):
-                st.switch_page(path)
+
+            if name == active_page:
+                # Active tab rendered as disabled button
+                st.button(
+                    name,
+                    key=f"nav_{name}",
+                    disabled=True
+                )
+            else:
+                if st.button(name, key=f"nav_{name}"):
+                    st.switch_page(path)
