@@ -87,6 +87,9 @@ def inject_nav_styles():
         background: rgba(255,255,255,0.08);
         border-bottom: 3px solid transparent;
         border-image: linear-gradient(90deg, #ff00cc, #3333ff) 1;
+        text-decoration: underline;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
     }
 
 
