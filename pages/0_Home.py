@@ -2,9 +2,7 @@ import streamlit as st
 from PIL import Image
 import altair as alt
 
-# Page config
 
-st.title("🎵 Song Popularity Prediction Dashboard")
 
 # Centered Title
 st.markdown("<h1 style='text-align: center;'>🎵 Song Popularity Prediction Dashboard</h1>", unsafe_allow_html=True)	
