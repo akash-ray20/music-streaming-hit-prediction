@@ -9,7 +9,6 @@ from components.nav import render_nav
 render_nav("EDA Insights")
 
 st.set_page_config(page_title="EDA Insights", layout="wide")
-inject_hover_card_styles()
 st.markdown("""
 # 📊 EDA Insights
 
@@ -188,7 +187,7 @@ def inject_hover_card_styles():
     </style>
     """, unsafe_allow_html=True)
 
-
+inject_hover_card_styles()
 def display_hover_insight(image_path: str, caption: str, insight_html: str, tags: list = None):
     """
     Renders a full-width chart card with hover-reveal insight overlay.
