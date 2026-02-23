@@ -17,7 +17,7 @@ st.write("")
 # Optional: Banner image at the top
 try:
     image = Image.open("images/banner.png")
-    resized_image = image.resize((1000, 400))
+    resized_image = image.resize((600, 400))
     st.image(resized_image)
 except:
     st.warning("Banner image not found.")
