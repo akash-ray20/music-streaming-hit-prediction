@@ -28,7 +28,7 @@ def display_insight(image_filename, caption, insight_text, img_width=700):
 
 # 1. Average Streams
 display_insight(
-    "Average Streams by release month.png",
+    "Distribution (Spotify Streams).png",
     "Distribution of Average Streams",
     """**Insight**:   
     **Skewed Distribution:**
@@ -67,7 +67,7 @@ Promoting these potential hits early can have a huge ROI due to the unequal dist
 
 # 2. Boxplot by Key
 display_insight(
-    "correlation matrix.png",
+    "Correlation Matrix.png",
     "Correlation Matrix of Numerical Features",
     """**Insight**:
 
@@ -111,7 +111,7 @@ Correlation helps us filter signal from noise — and aligns both modeling effor
 
 # 3. Boxplot by Mode
 display_insight(
-    "feature vs, streams.png",
+    "dance_valence_energy_vs_streams.png",
     " Scatterplots — Audio Features vs. Streams",
     """**Insight**: 
 
@@ -144,7 +144,7 @@ display_insight(
 
 # 4. Correlation Matrix
 display_insight(
-    "boxplot-key.png",
+    "Streams by Musical Keys (boxplot).png",
     " Boxplot — Streams by Musical Key",
     """**Insight**: 
     
@@ -162,7 +162,7 @@ display_insight(
 
 # 5. BPM Distribution
 display_insight(
-    "boxplot-mode.png",
+    "Streams by Mode (boxplot).png",
     "Boxplot — Streams by Mode (Major/Minor)",
 """**Insight**: 
 **What We Observed:**
@@ -181,7 +181,7 @@ display_insight(
 
 # 6. Spotify Chart vs Playlist
 display_insight(
-    "Distribution of bpm.png",
+    "Distribution (BPM).png",
     "Distribution of BPM (Tempo)",
     """**Insight**:
 
@@ -199,7 +199,7 @@ display_insight(
 
 # 7. Platform Presence vs Streams
 display_insight(
-    "avg-streams.png",
+    "Average Streams by release month.png",
     "Average Streams by Release Month",
     """**Insight**: 
     
@@ -228,7 +228,7 @@ display_insight(
 
 # 8. Playlist Count vs Streams
 display_insight(
-    "playlists vs. streams.png",
+    "in_playlist vs Streams.png",
     "Number of Playlists vs Streams",
     """**Insight**:  Playlist Presence Drives Streams
     
