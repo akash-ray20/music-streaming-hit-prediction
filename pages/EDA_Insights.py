@@ -2,6 +2,9 @@ import streamlit as st
 from PIL import Image
 import os
 
+from components.nav import render_nav
+render_nav("EDA Insights")
+
 st.set_page_config(page_title="EDA Insights", layout="wide")
 
 st.markdown("""
