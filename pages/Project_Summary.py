@@ -1,5 +1,8 @@
 import streamlit as st
 
+from components.nav import render_nav
+render_nav("Project Summary")
+
 st.set_page_config(page_title="Project Summary", layout="wide")
 st.title("Project Summary")
 
