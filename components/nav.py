@@ -67,16 +67,16 @@ def inject_nav_styles():
     }
 
 
-     /* ======================================================
-       4. HOVER STATE — only for inactive tabs
+    /* ======================================================
+       4. HOVER STATE
     ====================================================== */
 
-    .inactive-tab div.stButton > button:hover {
+    div.stButton > button:hover {
         transform: translateY(-3px);
         background: rgba(255,255,255,0.1);
         box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
-        cursor: pointer;
     }
+
 
 
     /* ======================================================
@@ -84,21 +84,12 @@ def inject_nav_styles():
     ====================================================== */
 
     .active-tab div.stButton > button {
-        background: rgba(255, 0, 204, 0.12);
-        border: 1px solid rgba(255, 0, 204, 0.35);
-        box-shadow: 0 0 14px rgba(255, 0, 204, 0.25);
-        color: #ff99ee;
-        font-weight: 700;
-        cursor: default;
-        transform: none;
-    }
-
-    /* Kill hover effect on active tab */
-    .active-tab div.stButton > button:hover {
-        transform: none;
-        background: rgba(255, 0, 204, 0.12);
-        box-shadow: 0 0 14px rgba(255, 0, 204, 0.25);
-        cursor: default;
+        background: rgba(255,255,255,0.08);
+        border-bottom: 3px solid transparent;
+        border-image: linear-gradient(90deg, #ff00cc, #3333ff) 1;
+        text-decoration: underline;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
     }
 
 
@@ -118,13 +109,14 @@ def render_nav(active_page: str):
 
     for i, (name, path) in enumerate(PAGES.items()):
         with cols[i]:
-            is_active = name == active_page
-            wrapper_class = "active-tab" if is_active else "inactive-tab"
-            
-            st.markdown(f'<div class="{wrapper_class}">', unsafe_allow_html=True)
-            
-            if st.button(name, key=f"nav_{name}"):
-                if not is_active:
+
+            if name == active_page:
+                # Active tab rendered as disabled button
+                st.button(
+                    name,
+                    key=f"nav_{name}",
+                    disabled=True
+                )
+            else:
+                if st.button(name, key=f"nav_{name}"):
                     st.switch_page(path)
-            
-            st.markdown('</div>', unsafe_allow_html=True)
