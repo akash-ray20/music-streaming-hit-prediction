@@ -106,16 +106,41 @@ def inject_nav_styles():
 # NAV RENDER FUNCTION
 # ==========================================================
 
-for i, (name, path) in enumerate(PAGES.items()):
-    with cols[i]:
+def render_nav(active_page: str):
+    """
+    Renders the top navigation bar.
+    active_page: Name of current page (must match key in PAGES dict)
+    """
 
-        is_active = name == active_page
+    # Inject base styles
+    inject_nav_styles()
 
-        if is_active:
-            st.markdown('<div class="nav-active">', unsafe_allow_html=True)
+    # Active button styling (stable override)
+    st.markdown("""
+    <style>
+    .nav-active div.stButton > button {
+        background: linear-gradient(90deg, #ff00cc, #3333ff) !important;
+        color: white !important;
+        border: none !important;
+        box-shadow: 0 0 18px rgba(255, 0, 200, 0.6);
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-        if st.button(name, key=f"nav_{name}"):
-            st.switch_page(path)
+    # Create equal-width columns
+    cols = st.columns(len(PAGES))
 
-        if is_active:
-            st.markdown('</div>', unsafe_allow_html=True)
+    for i, (name, path) in enumerate(PAGES.items()):
+        with cols[i]:
+
+            is_active = name == active_page
+
+            # Wrap only active button
+            if is_active:
+                st.markdown('<div class="nav-active">', unsafe_allow_html=True)
+
+            if st.button(name, key=f"nav_{name}"):
+                st.switch_page(path)
+
+            if is_active:
+                st.markdown('</div>', unsafe_allow_html=True)
