@@ -53,30 +53,34 @@ def inject_hover_card_styles():
 
     .insight-overlay {
         position: absolute;
-        inset: 0;
-        border-radius: 16px;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%) translateY(12px);
+        width: 88%;
+        max-height: 52%;
+        border-radius: 12px;
         background: linear-gradient(
             160deg,
             rgba(10, 5, 25, 0.97) 0%,
             rgba(20, 5, 40, 0.97) 100%
         );
-        border: 1px solid rgba(255, 0, 204, 0.2);
-        padding: 28px 32px;
+        border: 1px solid rgba(255, 0, 204, 0.35);
+        box-shadow: 0 8px 32px rgba(255, 0, 204, 0.2);
+        padding: 18px 22px;
         overflow-y: auto;
         opacity: 0;
-        transform: translateY(8px);
         transition: opacity 0.35s ease, transform 0.35s ease;
         pointer-events: none;
     }
 
     .insight-card:hover img {
-        filter: blur(3px) brightness(0.3);
-        transform: scale(1.02);
+        filter: blur(2px) brightness(0.45);
+        transform: scale(1.01);
     }
 
     .insight-card:hover .insight-overlay {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(-50%) translateY(0);
         pointer-events: auto;
     }
 
@@ -169,21 +173,21 @@ def display_hover_insight(image_path: str, caption: str, insight_html: str, tags
 
     tag_html = ""
     if tags:
-        pills = "".join(f'<span class="tag">{t}</span>' for t in tags)
-        tag_html = f'<div class="tag-row">{pills}</div>'
+        pills = "".join("<span class='tag'>" + t + "</span>" for t in tags)
+        tag_html = "<div class='tag-row'>" + pills + "</div>"
 
-    html = f"""
-    <div class="insight-card">
-        <img src="data:image/png;base64,{b64}" alt="{caption}" />
-        <div class="hover-hint">⟳ hover for insight</div>
-        <div class="insight-overlay">
-            <div class="card-title">{caption}</div>
-            {insight_html}
-            {tag_html}
-        </div>
-    </div>
-    <div class="insight-caption">↑ hover chart to reveal insights</div>
-    """
+    parts = [
+        "<div class='insight-card'>",
+        "<img src='data:image/png;base64,", b64, "' alt='", caption, "' />",
+        "<div class='hover-hint'>&#8635; hover for insight</div>",
+        "<div class='insight-overlay'>",
+        "<div class='card-title'>", caption, "</div>",
+        insight_html,
+        tag_html,
+        "</div></div>",
+        "<div class='insight-caption'>&#8593; hover chart to reveal insights</div>",
+    ]
+    html = "".join(parts)
     st.markdown(html, unsafe_allow_html=True)
 
 
