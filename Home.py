@@ -69,4 +69,4 @@ st.markdown("""
 """)
 
 st.markdown("---")
-st.success("Use the sidebar to navigate through insights, model training, predictions, and final takeaways.")
+st.success("Use the navigation bar above to explore insights, model training, predictions, and final takeaways.")
