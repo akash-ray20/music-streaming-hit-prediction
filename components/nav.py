@@ -28,7 +28,7 @@ def inject_nav_styles():
     <style>
 
     html, body, .stApp {
-    background: url("images/background.png");
+    background: url("background.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
