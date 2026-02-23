@@ -28,7 +28,7 @@ def display_insight(image_filename, caption, insight_text, img_width=700):
 
 # 1. Average Streams
 display_insight(
-    "Distribution of spotify streams.png",
+    "Average Streams by release month.png",
     "Distribution of Average Streams",
     """**Insight**:   
     **Skewed Distribution:**
