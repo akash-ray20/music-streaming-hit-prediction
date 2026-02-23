@@ -2,82 +2,123 @@ import streamlit as st
 
 
 # ==========================================================
-# PAGE CONFIGURATION
+# NAVIGATION CONFIGURATION
 # ==========================================================
 
 PAGES = {
     "Home": "Home.py",
     "EDA Insights": "pages/EDA_Insights.py",
-    "Model Training Information": "pages/Model Training Information.py",
+    "Model Training": "pages/Model Training Information.py",
     "Prediction Tool": "pages/Prediction Tool.py",
-    "Project Summary": "pages/Project_Summary.py",
+    "Project Summary": "pages/Project_Summary.py"
 }
 
 
 # ==========================================================
-# CSS INJECTION
+# CSS STYLING INJECTION
 # ==========================================================
 
 def inject_nav_styles():
     """
-    Injects stable navigation styling.
-    Does NOT break layout.
+    Injects all navigation-related CSS.
+    Keep ALL visual changes inside this function.
     """
 
-    st.markdown(
-        """
-        <style>
+    st.markdown("""
+    <style>
 
-        /* Hide Streamlit sidebar completely */
-        section[data-testid="stSidebar"] {
-            display: none !important;
-        }
+    /* ======================================================
+       1. LAYOUT CONTROL
+    ====================================================== */
 
-        /* Remove extra left padding caused by sidebar */
-        section.main > div {
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
+    /* Hide Streamlit sidebar */
+    section[data-testid="stSidebar"] {
+        display: none;
+    }
 
-        /* Button base style */
-        div.stButton > button {
-            border-radius: 30px;
-            padding: 10px 24px;
-            background: rgba(255,255,255,0.05);
-            color: white;
-            font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.2s ease;
-        }
+    /* Adjust main padding after sidebar removal */
+    section.main > div {
+        padding-left: 2rem;
+    }
 
-        /* Hover effect */
-        div.stButton > button:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
 
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+    /* ======================================================
+       2. NAV CONTAINER STRUCTURE
+    ====================================================== */
+
+    .nav-row {
+        margin-bottom: 40px;
+    }
+
+
+    /* ======================================================
+       3. BUTTON BASE STYLE
+    ====================================================== */
+
+    div.stButton > button {
+        border-radius: 30px;
+        padding: 10px 24px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(8px);
+        color: white;
+        font-weight: 500;
+        border: 1px solid rgba(255,255,255,0.08);
+        transition: all 0.25s ease;
+    }
+
+
+    /* ======================================================
+       4. HOVER STATE
+    ====================================================== */
+
+    div.stButton > button:hover {
+        transform: translateY(-3px);
+        background: rgba(255,255,255,0.1);
+        box-shadow: 0 6px 25px rgba(255, 0, 200, 0.4);
+    }
+
+
+
+    /* ======================================================
+       5. ACTIVE TAB STATE
+    ====================================================== */
+
+    .active-tab div.stButton > button {
+        background: rgba(255,255,255,0.08);
+        border-bottom: 3px solid transparent;
+        border-image: linear-gradient(90deg, #ff00cc, #3333ff) 1;
+    }
+
+
+    </style>
+    """, unsafe_allow_html=True)
 
 
 # ==========================================================
-# NAVIGATION RENDER
+# NAV RENDER FUNCTION
 # ==========================================================
 
 def render_nav(active_page: str):
     """
-    Renders stable top navigation.
-    active_page parameter retained for future use,
-    but not used for styling to preserve layout integrity.
+    Renders the top navigation bar.
+    active_page: Name of current page (must match key in PAGES dict)
     """
 
+    # Inject styles first
     inject_nav_styles()
 
+    # Create horizontal layout
     cols = st.columns(len(PAGES))
 
     for i, (name, path) in enumerate(PAGES.items()):
         with cols[i]:
+
+            # Determine if this is active page
+            container_class = "active-tab" if name == active_page else ""
+            st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
+
+            # Render navigation button
             if st.button(name, key=f"nav_{name}"):
                 st.switch_page(path)
+
+            st.markdown('</div>', unsafe_allow_html=True)
