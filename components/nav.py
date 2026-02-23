@@ -102,26 +102,23 @@ def inject_nav_styles():
 # ==========================================================
 
 def render_nav(active_page: str):
-    """
-    Renders the top navigation bar.
-    active_page: Name of current page (must match key in PAGES dict)
-    """
 
-    # Inject styles first
     inject_nav_styles()
 
-    # Create horizontal layout
+    # Inject dynamic active button style
+    st.markdown(f"""
+        <style>
+        button[data-testid="baseButton-nav_{active_page}"] {{
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 2px;
+        }}
+        </style>
+    """, unsafe_allow_html=True)
+
     cols = st.columns(len(PAGES))
 
     for i, (name, path) in enumerate(PAGES.items()):
         with cols[i]:
-
-            # Determine if this is active page
-            container_class = "active-tab" if name == active_page else ""
-            st.markdown(f'<div class="{container_class}">', unsafe_allow_html=True)
-
-            # Render navigation button
             if st.button(name, key=f"nav_{name}"):
                 st.switch_page(path)
-
-            st.markdown('</div>', unsafe_allow_html=True)
