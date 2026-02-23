@@ -1,5 +1,23 @@
 import streamlit as st
+import base64
 
+def set_background(image_path):
+    with open(image_path, "rb") as img:
+        encoded = base64.b64encode(img.read()).decode()
+
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background: url("data:image/png;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 # ==========================================================
 # NAVIGATION CONFIGURATION
@@ -23,16 +41,10 @@ def inject_nav_styles():
     Injects all navigation-related CSS.
     Keep ALL visual changes inside this function.
     """
-
+    set_background("images/background.png")
     st.markdown("""
     <style>
-
-    html, body, .stApp {
-    background: url("background.png");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    }
+    
     
     /* ======================================================
        1. LAYOUT CONTROL
