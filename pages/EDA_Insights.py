@@ -188,17 +188,15 @@ def display_hover_insight(image_path: str, caption: str, insight_html: str, tags
 
 
 # ============================================================
-# NAV — after set_page_config, after function definitions
+# NAV — after set_page_config, after all function definitions
 # ============================================================
 from components.nav import render_nav
 render_nav("EDA Insights")
 
-
 # ============================================================
-# INJECT STYLES — after functions are defined
+# INJECT STYLES — now safe, function is already defined above
 # ============================================================
 inject_hover_card_styles()
-
 
 # ============================================================
 # PAGE HEADER
@@ -216,7 +214,7 @@ image_dir = "images"
 
 
 # ============================================================
-# INSIGHT CARDS
+# INSIGHT CARDS — filenames exactly match GitHub repo
 # ============================================================
 
 # 1. Distribution of Streams
@@ -245,7 +243,7 @@ display_hover_insight(
 
 # 2. Correlation Matrix
 display_hover_insight(
-    image_path=os.path.join(image_dir, "correlation matrix.png"),
+    image_path=os.path.join(image_dir, "Correlation Matrix.png"),
     caption="Correlation Matrix of Numerical Features",
     insight_html="""
     <p><strong>Strongest Positive Correlations with Streams</strong><br>
@@ -260,36 +258,35 @@ display_hover_insight(
 
     <p><strong>Low / No Correlation</strong><br>
     speechiness_%, liveness_%, and key_encoded showed little or no correlation with streams.
-    These may not be useful in linear models.</p>
+    These are weak predictors in linear models.</p>
 
     <p><strong>Business Implication</strong><br>
     Playlist and chart inclusion — especially on Spotify — strongly correlates with success.
-    Marketing teams should prioritize playlist placements. A&R teams can use early playlist
-    presence as a success indicator.</p>
+    Marketing teams should prioritize playlist placements as the #1 lever.</p>
     """,
     tags=["Correlation", "Feature Selection", "Spotify Playlists", "Multicollinearity"]
 )
 
 # 3. Scatterplots — Audio Features vs Streams
 display_hover_insight(
-    image_path=os.path.join(image_dir, "feature vs, streams.png"),
+    image_path=os.path.join(image_dir, "dance_valence_energy_vs_streams.png"),
     caption="Scatterplots — Audio Features vs. Streams",
     insight_html="""
     <p><strong>Danceability & Energy</strong><br>
     Songs with moderate to high danceability and energy tend to have higher streams.
     The majority of top-streamed songs sit in the <strong>60–80% range</strong> for both.
-    However, these features alone aren't enough to predict success — they play a supporting role.</p>
+    However, these features alone aren't enough — they play a supporting role.</p>
 
     <p><strong>Valence (Positivity)</strong><br>
-    The distribution is much wider — some very positive (happy-sounding) songs are streamed a lot,
+    The distribution is much wider — some very positive songs are streamed a lot,
     but many aren't. Valence isn't a clear standalone indicator of popularity.</p>
 
     <p><strong>What This Tells Us</strong><br>
-    These features work better as interacting variables in a model. A song being energetic
-    and danceable may make it playlist-friendly, but only when backed by platform visibility.</p>
+    These features work better as interacting variables in a model. Energy and danceability
+    make songs playlist-friendly, but only when backed by platform visibility.</p>
 
     <p><strong>Business Use-Case</strong><br>
-    Marketing teams can boost promotion of high-danceability and energy songs in dance, workout,
+    Marketing teams can promote high-danceability and energy songs in dance, workout,
     or party playlists. A&R teams can use energy profile as an early screening signal.</p>
     """,
     tags=["Danceability", "Energy", "Valence", "Audio Features"]
@@ -297,7 +294,7 @@ display_hover_insight(
 
 # 4. Boxplot — Streams by Musical Key
 display_hover_insight(
-    image_path=os.path.join(image_dir, "boxplot-key.png"),
+    image_path=os.path.join(image_dir, "Streams by Musical Keys (boxplot).png"),
     caption="Boxplot — Streams by Musical Key",
     insight_html="""
     <p><strong>What We Observed</strong><br>
@@ -306,18 +303,18 @@ display_hover_insight(
 
     <p><strong>Outliers</strong><br>
     A few keys had outlier songs with very high stream counts — but that's likely due to
-    the artist's brand or platform push, not the key itself.</p>
+    artist brand or platform push, not the key itself.</p>
 
     <p><strong>Takeaway</strong><br>
     Musical key alone doesn't determine popularity. It may have minor influence but shouldn't
-    be relied on heavily when making playlist or promotion decisions.</p>
+    be heavily relied on for playlist or promotion decisions.</p>
     """,
     tags=["Musical Key", "Boxplot", "Low Impact Feature"]
 )
 
 # 5. Boxplot — Streams by Mode
 display_hover_insight(
-    image_path=os.path.join(image_dir, "boxplot-mode.png"),
+    image_path=os.path.join(image_dir, "Streams by Mode (boxplot).png"),
     caption="Boxplot — Streams by Mode (Major / Minor)",
     insight_html="""
     <p><strong>What We Observed</strong><br>
@@ -329,15 +326,15 @@ display_hover_insight(
     their slight advantage in mainstream streaming.</p>
 
     <p><strong>Takeaway</strong><br>
-    The difference isn't huge — mode is not a strong standalone predictor. But for feel-good
-    or mainstream playlists, favoring major key songs might provide a marginal boost.</p>
+    Mode is not a strong standalone predictor, but for feel-good or mainstream playlists,
+    favoring major key songs might provide a marginal boost.</p>
     """,
     tags=["Major Mode", "Minor Mode", "Boxplot", "Moderate Impact"]
 )
 
 # 6. BPM Distribution
 display_hover_insight(
-    image_path=os.path.join(image_dir, "Distribution of bpm.png"),
+    image_path=os.path.join(image_dir, "Distribution (BPM).png"),
     caption="Distribution of BPM (Tempo)",
     insight_html="""
     <p><strong>What We Observed</strong><br>
@@ -345,8 +342,8 @@ display_hover_insight(
     This aligns with common tempos for pop, dance, and mainstream genres.</p>
 
     <p><strong>Fewer Extreme Tempos</strong><br>
-    Very fast-paced songs (above 160 BPM) are rare in the dataset, suggesting they
-    aren't the norm for mainstream streaming success.</p>
+    Very fast-paced songs (above 160 BPM) are rare, suggesting they aren't the norm
+    for mainstream streaming success.</p>
 
     <p><strong>Takeaway</strong><br>
     Moderate tempos (~120 BPM) appear to be a sweet spot. A&R teams can use this as
@@ -357,7 +354,7 @@ display_hover_insight(
 
 # 7. Average Streams by Release Month
 display_hover_insight(
-    image_path=os.path.join(image_dir, "avg-streams.png"),
+    image_path=os.path.join(image_dir, "Average Streams by release month.png"),
     caption="Average Streams by Release Month",
     insight_html="""
     <p><strong>What We Observed</strong><br>
@@ -365,32 +362,32 @@ display_hover_insight(
     July and November showed slightly lower averages.</p>
 
     <p><strong>Why This Pattern Exists</strong><br>
-    Seasonal listening behavior drives this — New Year activity (Jan), exam breaks and
-    summer (May), and festive buildup (Sept) all correlate with higher platform engagement.</p>
+    Seasonal listening behavior drives this — New Year activity (Jan), summer breaks (May),
+    and festive buildup (Sept) all correlate with higher platform engagement.</p>
 
     <p><strong>Business Implication</strong><br>
     Release timing matters — especially for first-week performance and playlist push.
-    Launching a major single around January or September can provide a natural stream boost.</p>
+    Launching around January or September can provide a natural stream boost.</p>
 
     <p><strong>A&R / Marketing Takeaway</strong><br>
     Strategize launch windows around high-traffic months. Align marketing budgets and
-    playlist campaigns accordingly. Prepare promotional content in advance for seasonal spikes.</p>
+    playlist campaigns accordingly and prepare content in advance for seasonal spikes.</p>
     """,
     tags=["Release Month", "Seasonality", "Marketing Strategy", "Timing"]
 )
 
 # 8. Playlist Count vs Streams
 display_hover_insight(
-    image_path=os.path.join(image_dir, "playlists vs. streams.png"),
+    image_path=os.path.join(image_dir, "in_playlist vs Streams.png"),
     caption="Number of Playlists vs. Streams",
     insight_html="""
     <p><strong>Core Finding</strong><br>
     Across Spotify, Apple Music, and Deezer — <strong>more playlist presence = more streams</strong>.
-    The trend is strongest on Spotify, where editorial and algorithmic playlists have massive reach.</p>
+    The trend is strongest on Spotify where editorial and algorithmic playlists have massive reach.</p>
 
     <p><strong>Platform Breakdown</strong><br>
     Apple Music shows a similar pattern with slightly more spread. Deezer's trend is weaker,
-    likely due to lower representation in the dataset.</p>
+    likely due to lower dataset representation.</p>
 
     <p><strong>For the Marketing Team</strong><br>
     Actively work with playlist curators and editorial teams. Invest in metadata optimization,
