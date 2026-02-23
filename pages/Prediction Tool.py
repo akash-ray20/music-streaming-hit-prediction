@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 
 st.set_page_config(page_title="Predict Song Streams", layout="wide")
-st.title("🧠 Predict Song Popularity")
+#st.title("🧠 Predict Song Popularity")
 
 st.markdown("""
 <div style="
