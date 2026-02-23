@@ -7,11 +7,21 @@ st.set_page_config(page_title="Predict Song Streams", layout="wide")
 st.title("🧠 Predict Song Popularity")
 
 st.markdown("""
-Welcome to the **prediction page**!  
-Fill in the song attributes below and our trained Random Forest model will estimate its expected number of streams (based on historical trends).
-
-🔒 _Note: The model is trained on **log-transformed** stream counts for better generalization._
-""")
+<div style="
+    background: linear-gradient(90deg, #1f2937, #111827);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+">
+    <h1 style="margin-bottom: 5px;">🧠 Predict Song Popularity</h1>
+    <p style="margin-top: 0;">
+    Estimate expected stream counts using a trained Random Forest model.
+    </p>
+    <p style="font-size: 14px; opacity: 0.8;">
+    Model trained on log-transformed stream data for improved generalization.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # Load model
 @st.cache_resource
