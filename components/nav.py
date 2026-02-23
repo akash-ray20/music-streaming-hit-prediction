@@ -78,23 +78,27 @@ def inject_nav_styles():
     }
 
 
-    /* ======================================================
-       5. ACTIVE TAB STATE
-    ====================================================== */
 
-   .active-tab div.stButton > button {
-    background: rgba(255,255,255,0.08);
-    box-shadow: none;
+ /* ======================================================
+   5. ACTIVE TAB STATE
+====================================================== */
+
+.active-tab {
     position: relative;
-    }
+}
 
-/* Sharp underline indicator */
-.active-tab div.stButton > button::after {
+/* Subtle active background */
+.active-tab div.stButton > button {
+    background: rgba(255,255,255,0.08);
+}
+
+/* Underline indicator attached to wrapper */
+.active-tab::after {
     content: "";
     position: absolute;
-    bottom: -6px;
-    left: 15%;
-    width: 70%;
+    bottom: -10px;
+    left: 20%;
+    width: 60%;
     height: 3px;
     border-radius: 4px;
     background: linear-gradient(90deg, #ff00cc, #3333ff);
