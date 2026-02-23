@@ -1,12 +1,15 @@
 import streamlit as st
 from PIL import Image
+import base64
+import io
 import os
+
 
 from components.nav import render_nav
 render_nav("EDA Insights")
 
 st.set_page_config(page_title="EDA Insights", layout="wide")
-
+inject_hover_card_styles()
 st.markdown("""
 # 📊 EDA Insights
 
@@ -18,54 +21,226 @@ Here we break down patterns that help explain what drives a song’s popularity 
 image_dir = "images"
 
 # --- Helper to show images aesthetically ---
-def display_insight(image_filename, caption, insight_text, img_width=700):
-    img_path = os.path.join(image_dir, image_filename)
-    image = Image.open(img_path)
-    image.thumbnail((img_width, img_width))
+def image_to_base64(image_path: str, max_width: int = 900) -> str:
+    """Convert a local image to a base64 string for HTML embedding."""
+    img = Image.open(image_path)
     
-    st.markdown(f"### 🔍 {caption}")
-    st.image(image, use_container_width=False)
-    with st.expander("📝 Insight", expanded=True):
-        st.markdown(insight_text)
-    st.markdown("---")
+    # Resize if wider than max_width while keeping aspect ratio
+    if img.width > max_width:
+        ratio = max_width / img.width
+        new_size = (max_width, int(img.height * ratio))
+        img = img.resize(new_size, Image.LANCZOS)
+    
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    encoded = base64.b64encode(buffer.getvalue()).decode()
+    return encoded
+
+
+def inject_hover_card_styles():
+    """
+    Injects CSS for the hover insight cards.
+    Call this ONCE at the top of your EDA page, before rendering any cards.
+    """
+    st.markdown("""
+    <style>
+
+    /* ============================================================
+       HOVER INSIGHT CARD
+    ============================================================ */
+
+    .insight-card {
+        position: relative;
+        width: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.02);
+        cursor: pointer;
+    }
+
+    /* Chart image — fills the card */
+    .insight-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    /* Overlay — hidden by default */
+    .insight-overlay {
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        background: linear-gradient(
+            160deg,
+            rgba(10, 5, 25, 0.97) 0%,
+            rgba(20, 5, 40, 0.97) 100%
+        );
+        border: 1px solid rgba(255, 0, 204, 0.2);
+        padding: 28px 32px;
+        overflow-y: auto;
+
+        /* Hidden state */
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        pointer-events: none;
+    }
+
+    /* Reveal on hover */
+    .insight-card:hover img {
+        filter: blur(3px) brightness(0.3);
+        transform: scale(1.02);
+    }
+
+    .insight-card:hover .insight-overlay {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    /* ── Overlay typography ── */
+
+    .insight-overlay .card-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #ff99ee;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .insight-overlay .card-title::before {
+        content: "";
+        display: inline-block;
+        width: 3px;
+        height: 16px;
+        background: linear-gradient(180deg, #ff00cc, #6633ff);
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    .insight-overlay p,
+    .insight-overlay li {
+        font-size: 0.88rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.82);
+        margin-bottom: 6px;
+    }
+
+    .insight-overlay strong {
+        color: #cc99ff;
+        font-weight: 600;
+    }
+
+    .insight-overlay .tag-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+    }
+
+    .insight-overlay .tag {
+        background: rgba(255, 0, 204, 0.12);
+        border: 1px solid rgba(255, 0, 204, 0.3);
+        color: #ff99ee;
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+    }
+
+    /* Caption label below card */
+    .insight-caption {
+        text-align: center;
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.35);
+        margin-top: -20px;
+        margin-bottom: 24px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    /* Hover hint icon — bottom right of image */
+    .hover-hint {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.3);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .insight-card:hover .hover-hint {
+        opacity: 0;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+
+def display_hover_insight(image_path: str, caption: str, insight_html: str, tags: list = None):
+    """
+    Renders a full-width chart card with hover-reveal insight overlay.
+
+    Parameters:
+        image_path  : Path to the chart image file
+        caption     : Short label shown below the card
+        insight_html: HTML string for the overlay content
+        tags        : Optional list of tag strings shown as pills
+    """
+    b64 = image_to_base64(image_path)
+
+    tag_html = ""
+    if tags:
+        pills = "".join(f'<span class="tag">{t}</span>' for t in tags)
+        tag_html = f'<div class="tag-row">{pills}</div>'
+
+    html = f"""
+    <div class="insight-card">
+        <img src="data:image/png;base64,{b64}" alt="{caption}" />
+        
+        <div class="hover-hint">⟳ hover for insight</div>
+
+        <div class="insight-overlay">
+            <div class="card-title">{caption}</div>
+            {insight_html}
+            {tag_html}
+        </div>
+    </div>
+    <div class="insight-caption">↑ hover chart to reveal insights</div>
+    """
+
+    st.markdown(html, unsafe_allow_html=True)
 
 # 1. Average Streams
-display_insight(
-    "Distribution (Spotify Streams).png",
-    "Distribution of Average Streams",
-    """**Insight**:   
-    **Skewed Distribution:**
-- The stream count distribution is heavily right-skewed.
-→ Most songs have relatively low streams, but a few songs go viral and dominate.
+display_hover_insight(
+    image_path=os.path.join(image_dir, "Distribution of spotify streams.png"),
+    caption="Distribution of Average Streams",
+    insight_html="""
+    <p><strong>Skewed Distribution</strong><br>
+    The stream count is heavily right-skewed — most songs have low streams,
+    but a few go viral and dominate.</p>
 
-**Real-World Pattern:**
-- This mirrors the “winner-takes-most” trend in digital platforms like Spotify, YouTube, etc.
+    <p><strong>Why It Matters for Modeling</strong><br>
+    We applied a <strong>log transformation</strong> to reduce skew and 
+    improve model learning.</p>
 
-**Why It Matters for Modeling:**
-
-- Models trained on such data can get biased by extreme values (outliers).
-
-- These high-stream songs may mask the general trend in the rest of the dataset.
-
-- To solve this, we later applied a log transformation on stream counts to:
-
-        - Reduce skew
-
-        - Improve learning
-
-        - Focus on relative performance rather than absolute outliers
-
-**Business Implications:**
-
-- Since only a few songs achieve viral success, it's crucial to identify early breakout signals.
-
-**Marketing & A&R teams can focus on:**
-
-- Songs with rapid early playlist growth
-
-- Cross-platform exposure trends
-
-Promoting these potential hits early can have a huge ROI due to the unequal distribution of success."""
+    <p><strong>Business Implication</strong><br>
+    Identify early breakout signals — rapid playlist growth and 
+    cross-platform exposure are key indicators.</p>
+    """,
+    tags=["Right-Skewed", "Log Transformation", "Outlier Analysis"]
 )
 
 # 2. Boxplot by Key
