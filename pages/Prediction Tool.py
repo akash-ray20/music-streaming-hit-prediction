@@ -14,13 +14,13 @@ render_nav("Prediction Tool")
 # ============================================================
 # PAGE HEADER
 # ============================================================
+
 st.markdown("""
 <style>
 @keyframes pulse-bar {
     0%, 100% { transform: scaleY(1); opacity: 0.7; }
     50%       { transform: scaleY(1.6); opacity: 1; }
 }
-
 .hero-banner {
     position: relative;
     overflow: hidden;
@@ -30,8 +30,6 @@ st.markdown("""
     padding: 36px 40px;
     margin-bottom: 28px;
 }
-
-/* Animated equalizer bars — pure CSS */
 .eq-bars {
     position: absolute;
     right: 40px;
@@ -57,8 +55,6 @@ st.markdown("""
 .eq-bar:nth-child(6) { height: 75%; animation-delay: 0.75s; }
 .eq-bar:nth-child(7) { height: 55%; animation-delay: 0.9s; }
 .eq-bar:nth-child(8) { height: 85%; animation-delay: 1.05s; }
-
-/* Glow orb behind title */
 .hero-banner::before {
     content: "";
     position: absolute;
@@ -69,7 +65,6 @@ st.markdown("""
     background: radial-gradient(circle, rgba(255,0,204,0.12) 0%, transparent 70%);
     pointer-events: none;
 }
-
 .hero-tag {
     display: inline-block;
     background: rgba(255, 0, 204, 0.12);
@@ -83,7 +78,6 @@ st.markdown("""
     border-radius: 20px;
     margin-bottom: 14px;
 }
-
 .hero-title {
     font-size: 2.2rem;
     font-weight: 800;
@@ -94,77 +88,37 @@ st.markdown("""
     background-clip: text;
     line-height: 1.2;
 }
-
 .hero-sub {
     font-size: 0.95rem;
     color: rgba(255,255,255,0.6);
     margin: 0 0 18px 0;
     max-width: 520px;
 }
-
-.hero-stats {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-}
-
-.hero-stat {
-    display: flex;
-    flex-direction: column;
-}
-
-.hero-stat-value {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #ff99ee;
-}
-
-.hero-stat-label {
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-}
+.hero-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+.hero-stat { display: flex; flex-direction: column; }
+.hero-stat-value { font-size: 1.1rem; font-weight: 700; color: #ff99ee; }
+.hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; text-transform: uppercase; }
 </style>
-
-<div class="hero-banner">
-    <div class="eq-bars">
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-    </div>
-
-    <div class="hero-tag">🎵 ML-Powered Stream Predictor</div>
-    <h1 class="hero-title">Predict Song Popularity</h1>
-    <p class="hero-sub">
-        Tune your song's attributes and get an instant stream estimate
-        powered by a Random Forest model trained on 2023 Spotify data.
-    </p>
-    <div class="hero-stats">
-        <div class="hero-stat">
-            <span class="hero-stat-value">~950</span>
-            <span class="hero-stat-label">Songs Trained On</span>
-        </div>
-        <div class="hero-stat">
-            <span class="hero-stat-value">R² 0.79</span>
-            <span class="hero-stat-label">Model Accuracy</span>
-        </div>
-        <div class="hero-stat">
-            <span class="hero-stat-value">Log-Scale</span>
-            <span class="hero-stat-label">Output Transform</span>
-        </div>
-        <div class="hero-stat">
-            <span class="hero-stat-value">22</span>
-            <span class="hero-stat-label">Input Features</span>
-        </div>
-    </div>
-</div>
 """, unsafe_allow_html=True)
+
+st.markdown(
+    "<div class='hero-banner'>"
+    "<div class='eq-bars'>"
+    "<div class='eq-bar'></div><div class='eq-bar'></div><div class='eq-bar'></div>"
+    "<div class='eq-bar'></div><div class='eq-bar'></div><div class='eq-bar'></div>"
+    "<div class='eq-bar'></div><div class='eq-bar'></div>"
+    "</div>"
+    "<div class='hero-tag'>&#127925; ML-Powered Stream Predictor</div>"
+    "<h1 class='hero-title'>Predict Song Popularity</h1>"
+    "<p class='hero-sub'>Tune your song attributes and get an instant stream estimate powered by a Random Forest model trained on 2023 Spotify data.</p>"
+    "<div class='hero-stats'>"
+    "<div class='hero-stat'><span class='hero-stat-value'>~950</span><span class='hero-stat-label'>Songs Trained On</span></div>"
+    "<div class='hero-stat'><span class='hero-stat-value'>R&#178; 0.79</span><span class='hero-stat-label'>Model Accuracy</span></div>"
+    "<div class='hero-stat'><span class='hero-stat-value'>Log-Scale</span><span class='hero-stat-label'>Output Transform</span></div>"
+    "<div class='hero-stat'><span class='hero-stat-value'>22</span><span class='hero-stat-label'>Input Features</span></div>"
+    "</div></div>",
+    unsafe_allow_html=True
+)
 
 # ============================================================
 # LOAD MODEL
