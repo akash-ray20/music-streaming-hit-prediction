@@ -228,39 +228,25 @@ input_df = pd.DataFrame({
 # ============================================================
 st.markdown("---")
 
-# Custom CSS for the button
 button_css = """
 <style>
 div.stButton > button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%);
+    color: #00d4ff;
     font-weight: bold;
     font-size: 16px;
     padding: 12px 30px;
-    border: none;
+    border: 2px solid #00d4ff;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
 
 div.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-}
-
-div.stButton > button:active {
-    transform: translateY(0);
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
 }
 </style>
 """
 st.markdown(button_css, unsafe_allow_html=True)
-
-if st.button("🎯 Predict Number of Streams", key="predict_btn"):
-    try:
-        log_pred = model.predict(input_df)[0]
-        predicted_streams = int(np.exp(log_pred))
-        st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
-        st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
