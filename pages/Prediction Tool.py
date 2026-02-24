@@ -250,3 +250,12 @@ div.stButton > button:hover {
 </style>
 """
 st.markdown(button_css, unsafe_allow_html=True)
+
+if st.button("🎯 Predict Number of Streams", key="predict_btn"):
+    try:
+        log_pred = model.predict(input_df)[0]
+        predicted_streams = int(np.exp(log_pred))
+        st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
+        st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
