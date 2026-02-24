@@ -133,6 +133,20 @@ st.markdown("""
         line-height: 1.8;
         margin-bottom: 0.6rem;
     }
+
+    /* Findings container styling */
+    .observation-box + [data-testid="stMarkdownContainer"] ul {
+        padding: 1.5rem;
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(102, 126, 234, 0.08) 100%);
+        border-left: 4px solid #00d4ff;
+        border-radius: 0 10px 10px 10px;
+        margin-top: -1rem;
+    }
+
+    .observation-box + [data-testid="stMarkdownContainer"] li {
+        color: #e0e0e0;
+        font-size: 0.95rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -140,7 +154,7 @@ st.markdown("""
 # PAGE CONTENT
 # ============================================================================
 
-st.title("📈 Model Training Results")
+st.title("Model Training Results")
 
 st.markdown('<p class="intro-text">Comprehensive evaluation of three regression models before and after log transformation</p>', unsafe_allow_html=True)
 
@@ -335,19 +349,22 @@ st.markdown("---")
 st.markdown("""
 <div class="observation-box">
     <h3 style="margin-top: 0; color: #00d4ff;">🎯 Key Findings & Recommendations</h3>
-    <ul>
-        <li><strong>Playlist Features Dominate</strong>: <span class="highlight">in_spotify_playlists</span>, <span class="highlight">in_spotify_charts</span>, and <span class="highlight">in_apple_playlists</span> are the strongest contributors to streaming predictions.</li>
-        
-        <li><strong>Audio Features Matter</strong>: <span class="highlight">danceability</span>, <span class="highlight">energy</span>, and <span class="highlight">valence</span> show moderate influence on popularity.</li>
-        
-        <li><strong>Weak Predictors</strong>: <span class="highlight">key</span>, <span class="highlight">mode</span>, and <span class="highlight">speechiness</span> had minimal impact on model performance.</li>
-        
-        <li><strong>Model Selection</strong>: <strong>Random Forest</strong> emerges as the optimal choice with the best R² (0.79), lowest MAE (0.36), and strong cross-validation scores (R² = 0.73).</li>
-        
-        <li><strong>Log Transformation Impact</strong>: Dramatic improvement in metrics after log transformation confirms the presence of extreme outliers and right-skewed distribution in the original data.</li>
-    </ul>
 </div>
 """, unsafe_allow_html=True)
+
+col_findings = st.container()
+with col_findings:
+    st.markdown("""
+- **Playlist Features Dominate**: <span class="highlight">in_spotify_playlists</span>, <span class="highlight">in_spotify_charts</span>, and <span class="highlight">in_apple_playlists</span> are the strongest contributors to streaming predictions.
+
+- **Audio Features Matter**: <span class="highlight">danceability</span>, <span class="highlight">energy</span>, and <span class="highlight">valence</span> show moderate influence on popularity.
+
+- **Weak Predictors**: <span class="highlight">key</span>, <span class="highlight">mode</span>, and <span class="highlight">speechiness</span> had minimal impact on model performance.
+
+- **Model Selection**: <strong>Random Forest</strong> emerges as the optimal choice with the best R² (0.79), lowest MAE (0.36), and strong cross-validation scores (R² = 0.73).
+
+- **Log Transformation Impact**: Dramatic improvement in metrics after log transformation confirms the presence of extreme outliers and right-skewed distribution in the original data.
+    """, unsafe_allow_html=True)
 
 st.markdown("""
 ### 💡 Next Steps
