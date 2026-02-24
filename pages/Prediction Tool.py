@@ -121,9 +121,11 @@ st.markdown(
 )
 
 # ============================================================
-# TOP PREDICT BUTTON (UI only)
+# TOP PREDICT BUTTON + RESULT PLACEHOLDER
 # ============================================================
 predict_clicked = st.button("🎯 Predict Number of Streams", key="predict_top")
+
+result_container = st.container()
 
 st.markdown("---")
 
@@ -232,14 +234,17 @@ input_df = pd.DataFrame({
 })
 
 # ============================================================
-# PREDICT LOGIC (runs when top button clicked)
+# PREDICT LOGIC
 # ============================================================
 if predict_clicked:
     try:
         log_pred = model.predict(input_df)[0]
         predicted_streams = int(np.exp(log_pred))
-        st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
-        st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
 
+        with result_container:
+            st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
+            st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
+
+    except Exception as e:
+        with result_container:
+            st.error(f"Prediction failed: {e}")
