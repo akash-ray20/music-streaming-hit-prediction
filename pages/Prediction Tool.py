@@ -121,6 +121,13 @@ st.markdown(
 )
 
 # ============================================================
+# TOP PREDICT BUTTON (UI only)
+# ============================================================
+predict_clicked = st.button("🎯 Predict Number of Streams", key="predict_top")
+
+st.markdown("---")
+
+# ============================================================
 # LOAD MODEL
 # ============================================================
 @st.cache_resource
@@ -225,15 +232,8 @@ input_df = pd.DataFrame({
 })
 
 # ============================================================
-# PREDICT
+# PREDICT LOGIC (runs when top button clicked)
 # ============================================================
-
-st.markdown('<div class="predict-btn-container">', unsafe_allow_html=True)
-
-predict_clicked = st.button("🎯 Predict Number of Streams", key="predict_btn")
-
-st.markdown('</div>', unsafe_allow_html=True)
-
 if predict_clicked:
     try:
         log_pred = model.predict(input_df)[0]
@@ -242,3 +242,4 @@ if predict_clicked:
         st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
     except Exception as e:
         st.error(f"Prediction failed: {e}")
+
