@@ -130,6 +130,41 @@ def load_model():
 model = load_model()
 
 # ============================================================
+# PREDICT
+# ============================================================
+
+st.markdown("---")
+
+with st.container():
+    st.markdown("""
+    <style>
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        font-weight: bold !important;
+        font-size: 16px !important;
+        padding: 12px 30px !important;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+    button[kind="primary"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    if st.button("🎯 Predict Number of Streams", key="predict_btn"):
+        try:
+            log_pred = model.predict(input_df)[0]
+            predicted_streams = int(np.exp(log_pred))
+            st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
+            st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
+        except Exception as e:
+            st.error(f"Prediction failed: {e}")
+
+
+# ============================================================
 # SECTION 1 — RELEASE & PLATFORM INFO (3 columns)
 # ============================================================
 st.markdown("### 🎵 Release Information & Platform Presence")
