@@ -54,14 +54,6 @@ with col1:
     released_year = st.selectbox("Release Year", options=range(2015, 2025), index=7)
     released_month = st.slider("Release Month", 1, 12, 6)
     released_day = st.slider("Release Day", 1, 31, 15)
-    key_options = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    selected_key = st.selectbox("Musical Key", key_options, index=0)
-    key_mapping = {
-        'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4, 'F': 5,
-        'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
-    }
-    key_encoded = key_mapping[selected_key]
-    mode = st.radio("Mode", options=[0, 1], index=1, format_func=lambda x: "Minor" if x == 0 else "Major")
 
 with col2:
     st.markdown("**🎧 Spotify & Apple**")
@@ -76,6 +68,18 @@ with col3:
     in_deezer_charts = st.slider("In Deezer Charts", 0, 100, 1)
     in_shazam_charts = st.slider("In Shazam Charts", 0.0, 100.0, 2.5)
     bpm = st.slider("Beats Per Minute (BPM)", 60, 200, 120)
+
+key_col, mode_col = st.columns([1, 2])
+with key_col:
+    key_options = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    selected_key = st.selectbox("Musical Key", key_options, index=0)
+    key_mapping = {
+        'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4, 'F': 5,
+        'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
+    }
+    key_encoded = key_mapping[selected_key]
+with mode_col:
+    mode = st.radio("Mode", options=[0, 1], index=1, format_func=lambda x: "Minor" if x == 0 else "Major", horizontal=True)
 
 # ============================================================
 # SECTION 2 — AUDIO FEATURES (7 sliders in a row)
