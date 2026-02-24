@@ -99,45 +99,52 @@ def inject_nav_styles():
 
 
     /* ======================================================
-       5. ACTIVE TAB STATE
+       5. ACTIVE TAB STATE (Disabled Button)
     ====================================================== */
 
-    .active-tab div.stButton > button {
-        background: rgba(255,255,255,0.08);
-        border-bottom: 3px solid transparent;
-        border-image: linear-gradient(90deg, #ff00cc, #3333ff) 1;
-        text-decoration: underline;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
+    div.stButton > button:disabled {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%) !important;
+        color: #667eea !important;
+        border: 1.5px solid rgba(102, 126, 234, 0.6) !important;
+        font-weight: 600 !important;
+        cursor: default !important;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4) !important;
+        text-decoration: none !important;
     }
 
-  /* =========================================
-       PRIMARY BUTTON – THEMED STYLE
+    div.stButton > button:disabled:hover {
+        transform: none !important;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%) !important;
+        box-shadow: 0 0 25px rgba(102, 126, 234, 0.5) !important;
+    }
+
+    /* =========================================
+       PREDICT BUTTON STYLING
     ========================================= */
 
-    button[kind="primary"] {
-        background: linear-gradient(135deg, #8A2BE2, #00BFFF) !important;
-        color: white !important;
-        font-weight: 600 !important;
-        font-size: 16px !important;
-        padding: 14px 30px !important;
-        border-radius: 40px !important;
-        border: none !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
+    .predict-btn-container div.stButton > button {
+        background: linear-gradient(135deg, #8A2BE2, #00BFFF);
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 14px 28px;
+        border-radius: 40px;
+        border: none;
+        backdrop-filter: blur(12px);
+        transition: all 0.3s ease;
+        box-shadow: 0 0 12px rgba(138,43,226,0.4);
     }
 
-    /* Hover */
-    button[kind="primary"]:hover {
+    /* Hover Effect */
+    .predict-btn-container div.stButton > button:hover {
         transform: translateY(-4px) scale(1.03);
-        box-shadow:
-            0 0 25px rgba(0,191,255,0.8),
-            0 0 40px rgba(138,43,226,0.6);
+        box-shadow: 0 0 25px rgba(0,191,255,0.8),
+                    0 0 40px rgba(138,43,226,0.6);
         cursor: pointer;
     }
 
-    /* Active click */
-    button[kind="primary"]:active {
+    /* Click Effect */
+    .predict-btn-container div.stButton > button:active {
         transform: scale(0.97);
         box-shadow: 0 0 15px rgba(138,43,226,0.6);
     }
