@@ -230,7 +230,12 @@ input_df = pd.DataFrame({
 st.markdown("---")
 
 # Custom CSS for the button
-button_css = """
+
+st.markdown(button_css, unsafe_allow_html=True)
+
+if st.button("🎯 Predict Number of Streams", key="predict_btn"):
+    try:
+            button_css = """
 <style>
 div.stButton > button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -255,10 +260,6 @@ div.stButton > button:active {
 }
 </style>
 """
-st.markdown(button_css, unsafe_allow_html=True)
-
-if st.button("🎯 Predict Number of Streams", key="predict_btn"):
-    try:
         log_pred = model.predict(input_df)[0]
         predicted_streams = int(np.exp(log_pred))
         st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
