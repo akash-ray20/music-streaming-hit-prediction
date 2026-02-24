@@ -110,7 +110,7 @@ st.markdown(
     "</div>"
     "<div class='hero-tag'>&#127925; ML-Powered Stream Predictor</div>"
     "<h1 class='hero-title'>Predict Song Popularity</h1>"
-    "<p class='hero-sub'>Tune your song attributes and get an instant stream estimate powered by a Random Forest model trained on 2023 Spotify data.</p>"
+    "<p class='hero-sub'>Tune your song attributes and get an instant stream estimate powered by a Random Forest model trained on data from Spotify.</p>"
     "<div class='hero-stats'>"
     "<div class='hero-stat'><span class='hero-stat-value'>~950</span><span class='hero-stat-label'>Songs Trained On</span></div>"
     "<div class='hero-stat'><span class='hero-stat-value'>R&#178; 0.79</span><span class='hero-stat-label'>Model Accuracy</span></div>"
