@@ -103,7 +103,7 @@ st.markdown("""
 # PAGE CONTENT
 # ============================================================================
 
-st.title("📊 Project Summary")
+st.title("Project Summary")
 
 # Problem Statement Section
 st.markdown("## 🎯 Problem Statement")
