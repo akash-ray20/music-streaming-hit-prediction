@@ -226,26 +226,32 @@ input_df = pd.DataFrame({
 # ============================================================
 # PREDICT
 # ============================================================
+
 st.markdown("---")
 
+# Custom CSS for the button
 button_css = """
 <style>
 div.stButton > button {
-    background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%);
-    color: #00d4ff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     font-weight: bold;
     font-size: 16px;
     padding: 12px 30px;
-    border: 2px solid #00d4ff;
+    border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 div.stButton > button:hover {
-    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+div.stButton > button:active {
+    transform: translateY(0);
 }
 </style>
 """
