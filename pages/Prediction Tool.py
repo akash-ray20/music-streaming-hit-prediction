@@ -12,9 +12,8 @@ from components.nav import render_nav
 render_nav("Prediction Tool")
 
 # ============================================================
-# PAGE HEADER
+# HERO BANNER — CSS (separate call to avoid markdown parser issues)
 # ============================================================
-
 st.markdown("""
 <style>
 @keyframes pulse-bar {
@@ -101,6 +100,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# ============================================================
+# HERO BANNER — HTML (separate call)
+# ============================================================
 st.markdown(
     "<div class='hero-banner'>"
     "<div class='eq-bars'>"
@@ -158,6 +160,7 @@ with col3:
     in_shazam_charts = st.slider("In Shazam Charts", 0.0, 100.0, 2.5)
     bpm = st.slider("Beats Per Minute (BPM)", 60, 200, 120)
 
+# ── Musical Key & Mode side by side ──
 key_col, mode_col = st.columns([1, 2])
 with key_col:
     key_options = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -168,10 +171,16 @@ with key_col:
     }
     key_encoded = key_mapping[selected_key]
 with mode_col:
-    mode = st.radio("Mode", options=[0, 1], index=1, format_func=lambda x: "Minor" if x == 0 else "Major", horizontal=True)
+    mode = st.radio(
+        "Mode",
+        options=[0, 1],
+        index=1,
+        format_func=lambda x: "Minor" if x == 0 else "Major",
+        horizontal=True
+    )
 
 # ============================================================
-# SECTION 2 — AUDIO FEATURES (7 sliders in a row)
+# SECTION 2 — AUDIO FEATURES (4 columns x 2 rows)
 # ============================================================
 st.markdown("### 🎚 Audio Features")
 st.markdown("---")
@@ -194,7 +203,7 @@ with b2:
 with b3:
     speechiness = st.slider("Speechiness (%)", 0, 100, 5)
 with b4:
-    st.empty()  # intentional — keeps grid balanced with 7 items
+    st.empty()
 
 # ============================================================
 # BUILD INPUT DATAFRAME
@@ -224,15 +233,81 @@ input_df = pd.DataFrame({
 })
 
 # ============================================================
-# PREDICT
+# PREDICT BUTTON — styled + result card
 # ============================================================
 st.markdown("---")
 
-if st.button("🎯 Predict Number of Streams"):
+st.markdown("""
+<style>
+div[data-testid="stButton"] > button {
+    background: linear-gradient(135deg, #ff00cc 0%, #6633ff 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.06em !important;
+    padding: 14px 36px !important;
+    border-radius: 30px !important;
+    border: none !important;
+    box-shadow: 0 4px 24px rgba(255, 0, 204, 0.5) !important;
+    transition: all 0.25s ease !important;
+    width: 100% !important;
+}
+div[data-testid="stButton"] > button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 32px rgba(255, 0, 204, 0.7) !important;
+}
+.result-card {
+    background: linear-gradient(135deg, #1a0a2e, #0a1628);
+    border: 1px solid rgba(255, 0, 204, 0.35);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-top: 24px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 0, 204, 0.15);
+}
+.result-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.result-number {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffffff, #ff99ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+.result-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown(
+    "<p style='text-align:center; color:rgba(255,255,255,0.3); font-size:0.78rem;"
+    " letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px;'>"
+    "&#8595; Set your song attributes above, then hit predict</p>",
+    unsafe_allow_html=True
+)
+
+if st.button("🎵  Predict Number of Streams"):
     try:
         log_pred = model.predict(input_df)[0]
         predicted_streams = int(np.exp(log_pred))
-        st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
-        st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
+        st.markdown(
+            "<div class='result-card'>"
+            "<div class='result-label'>&#127925; Estimated Stream Count</div>"
+            "<div class='result-number'>" + f"{predicted_streams:,}" + "</div>"
+            "<div class='result-note'>Based on historical Spotify data &nbsp;&middot;&nbsp; Log-scale model &nbsp;&middot;&nbsp; Random Forest Regressor</div>"
+            "</div>",
+            unsafe_allow_html=True
+        )
     except Exception as e:
         st.error(f"Prediction failed: {e}")
