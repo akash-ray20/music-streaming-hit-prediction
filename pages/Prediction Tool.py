@@ -229,33 +229,25 @@ input_df = pd.DataFrame({
 
 st.markdown("---")
 
-# Custom CSS for ONLY the predict button
-button_css = """
-<style>
-/* Target only buttons with the specific key */
-button[kind="primary"] {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    color: white !important;
-    font-weight: bold !important;
-    font-size: 16px !important;
-    padding: 12px 30px !important;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
-}
-
-button[kind="primary"]:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
-}
-</style>
-"""
-
-# Wrap in a container to isolate the styling
 with st.container():
-    st.markdown(button_css, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        font-weight: bold !important;
+        font-size: 16px !important;
+        padding: 12px 30px !important;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+    button[kind="primary"]:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     if st.button("🎯 Predict Number of Streams", key="predict_btn"):
         try:
             log_pred = model.predict(input_df)[0]
