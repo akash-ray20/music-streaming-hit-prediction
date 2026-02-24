@@ -229,40 +229,38 @@ input_df = pd.DataFrame({
 
 st.markdown("---")
 
-# Custom CSS for the button
-
-st.markdown(button_css, unsafe_allow_html=True)
-
-if st.button("🎯 Predict Number of Streams", key="predict_btn"):
-    try:
-            button_css = """
+# Custom CSS for ONLY the predict button
+button_css = """
 <style>
-div.stButton > button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+/* Target only buttons with the specific key */
+button[kind="primary"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    padding: 12px 30px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
 }
 
-div.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-}
-
-div.stButton > button:active {
-    transform: translateY(0);
+button[kind="primary"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
 }
 </style>
 """
-        log_pred = model.predict(input_df)[0]
-        predicted_streams = int(np.exp(log_pred))
-        st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
-        st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
+
+# Wrap in a container to isolate the styling
+with st.container():
+    st.markdown(button_css, unsafe_allow_html=True)
+    if st.button("🎯 Predict Number of Streams", key="predict_btn"):
+        try:
+            log_pred = model.predict(input_df)[0]
+            predicted_streams = int(np.exp(log_pred))
+            st.success(f"🎧 **Estimated Streams:** {predicted_streams:,}")
+            st.caption("This prediction assumes distribution similar to the dataset and average platform visibility.")
+        except Exception as e:
+            st.error(f"Prediction failed: {e}")
