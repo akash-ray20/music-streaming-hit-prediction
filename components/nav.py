@@ -111,33 +111,33 @@ def inject_nav_styles():
         text-decoration-thickness: 2px;
     }
 
-    /* =========================================
-       PREDICT BUTTON STYLING
+  /* =========================================
+       PRIMARY BUTTON – THEMED STYLE
     ========================================= */
 
-    .predict-btn-container div.stButton > button {
-        background: linear-gradient(135deg, #8A2BE2, #00BFFF);
-        color: white;
-        font-weight: 600;
-        font-size: 16px;
-        padding: 14px 28px;
-        border-radius: 40px;
-        border: none;
-        backdrop-filter: blur(12px);
-        transition: all 0.3s ease;
-        box-shadow: 0 0 12px rgba(138,43,226,0.4);
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #8A2BE2, #00BFFF) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+        padding: 14px 30px !important;
+        border-radius: 40px !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
     }
 
-    /* Hover Effect */
-    .predict-btn-container div.stButton > button:hover {
+    /* Hover */
+    button[kind="primary"]:hover {
         transform: translateY(-4px) scale(1.03);
-        box-shadow: 0 0 25px rgba(0,191,255,0.8),
-                    0 0 40px rgba(138,43,226,0.6);
+        box-shadow:
+            0 0 25px rgba(0,191,255,0.8),
+            0 0 40px rgba(138,43,226,0.6);
         cursor: pointer;
     }
 
-    /* Click Effect */
-    .predict-btn-container div.stButton > button:active {
+    /* Active click */
+    button[kind="primary"]:active {
         transform: scale(0.97);
         box-shadow: 0 0 15px rgba(138,43,226,0.6);
     }
