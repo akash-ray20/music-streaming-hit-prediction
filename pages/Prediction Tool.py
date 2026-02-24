@@ -123,7 +123,7 @@ st.markdown(
 # ============================================================
 # TOP PREDICT BUTTON + RESULT PLACEHOLDER
 # ============================================================
-predict_clicked = st.button("🎯 Predict Number of Streams", key="predict_top")
+predict_clicked = st.button("🎯 Predict Number of Streams (Adjust Parameters below)", key="predict_top", type = "primary")
 
 result_container = st.container()
 
